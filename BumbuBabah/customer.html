@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Menu</title>
+
+<style>
+
+body {
+  font-family: Arial;
+  background: #f4f4f4;
+  padding: 30px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* BOX */
+.menu, .cart {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 450px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  max-height: 650px;
+  overflow-y: auto;
+}
+
+/* CATEGORY BUTTONS */
+.category-tabs {
+  margin: 10px 0 20px;
+}
+
+.tab-btn {
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #eee;
+}
+
+.tab-btn.active {
+  background: black;
+  color: white;
+}
+
+/* ITEM */
+.item {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s ease;
+}
+
+.add {
+  background: black;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* HIDE SYSTEM */
+.hide {
+  display: none !important;
+}
+
+/* CART */
+.cart-item {
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}
+
+.qty-btn {
+  padding: 3px 8px;
+  margin: 0 5px;
+}
+
+.checkout {
+  background: green;
+  color: white;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Welcome Customer 🍔</h1>
+<p>Browse menu, add to cart, checkout</p>
+
+<div class="container">
+
+<!-- MENU -->
+<div class="menu">
+
+  <h2>Bumbu Babah Menu 🍛</h2>
+
+  <!-- CATEGORY -->
+  <div class="category-tabs">
+    <button class="tab-btn active" onclick="filterMenu(event,'all')">All</button>
+    <button class="tab-btn" onclick="filterMenu(event,'rice')">Rice</button>
+    <button class="tab-btn" onclick="filterMenu(event,'chicken')">Chicken</button>
+    <button class="tab-btn" onclick="filterMenu(event,'beef')">Beef</button>
+    <button class="tab-btn" onclick="filterMenu(event,'seafood')">Seafood</button>
+    <button class="tab-btn" onclick="filterMenu(event,'vegetables')">Vegetables</button>
+    <button class="tab-btn" onclick="filterMenu(event,'drink')">Drink</button>
+    <button class="tab-btn" onclick="filterMenu(event,'dessert')">Dessert</button>
+  </div>
+
+  <!-- ITEMS -->
+  <div class="item rice">
+    Nasi Putih (RM3)
+    <button class="add" onclick="addToCart('Nasi Putih',3)">Add</button>
+  </div>
+
+  <div class="item rice">
+    Nasi Lemak Padang (RM5)
+    <button class="add" onclick="addToCart('Nasi Lemak Padang',5)">Add</button>
+  </div>
+  
+  <div class="item rice">
+    Nasi Kerabu Janda 3 Rasa (RM8)
+    <button class="add" onclick="addToCart('Nasi Kerabu Janda 3 Rasa',8)">Add</button>
+  </div> 
+
+  <div class="item chicken">
+    Ayam Rendang (RM12)
+    <button class="add" onclick="addToCart('Ayam Rendang',12)">Add</button>
+  </div>
+
+  <div class="item chicken">
+    Ayam Pop (RM11)
+    <button class="add" onclick="addToCart('Ayam Pop',11)">Add</button>
+  </div>
+  
+  <div class="item chicken">
+    Ayam Gulai (RM10)
+    <button class="add" onclick="addToCart('Ayam Gulai',10)">Add</button>
+  </div>
+  
+  <div class="item chicken">
+    Ayam Goreng (RM7)
+    <button class="add" onclick="addToCart('Ayam Goreng',7)">Add</button>
+  </div>
+
+  <div class="item beef">
+    Daging Rendang (RM15)
+    <button class="add" onclick="addToCart('Daging Rendang',15)">Add</button>
+  </div>
+  
+    <div class="item beef">
+    Daging Gulai (RM12)
+    <button class="add" onclick="addToCart('Daging Gulai',12)">Add</button>
+  </div>
+  
+    <div class="item beef">
+    Daging Dendeng (RM10)
+    <button class="add" onclick="addToCart('Daging Dendeng',10)">Add</button>
+  </div>
+  
+    <div class="item beef">
+    Daging Wagyu A5 Miyazaki (RM67)
+    <button class="add" onclick="addToCart('Daging Wagyu A5 Miyazaki',67)">Add</button>
+  </div>
+
+  <div class="item seafood">
+    Ikan Bakar (RM14)
+    <button class="add" onclick="addToCart('Ikan Bakar',14)">Add</button>
+  </div>
+  
+  <div class="item seafood">
+    Ikan Gulai (RM12)
+    <button class="add" onclick="addToCart('Ikan Gulai',12)">Add</button>
+  </div>
+  
+<div class="item seafood">
+    Ikan Steam (RM12)
+    <button class="add" onclick="addToCart('Ikan Steam',15)">Add</button>
+  </div>
+
+  <div class="item vegetables">
+    Kangkung Belacan (RM7)
+    <button class="add" onclick="addToCart('Kangkung Belacan',7)">Add</button>
+  </div>
+  
+<div class="item vegetables">
+  Sayur Nangka (RM7)
+  <button class="add" onclick="addToCart('Sayur Nangka',7)">Add</button>
+</div>
+
+<div class="item vegetables">
+  Terung Balado (RM6)
+  <button class="add" onclick="addToCart('Terung Balado',6)">Add</button>
+</div>
+
+<div class="item vegetables">
+  Tempe Goreng (RM5)
+  <button class="add" onclick="addToCart('Tempe Goreng',5)">Add</button>
+</div>
+
+  <div class="item drink">
+    Teh Ais (RM3)
+    <button class="add" onclick="addToCart('Teh Ais',3)">Add</button>
+  </div>
+  
+<div class="item drink">
+  Teh O Ais (RM2)
+  <button class="add" onclick="addToCart('Teh O Ais',2)">Add</button>
+</div>
+
+<div class="item drink">
+  Kopi Ais (RM3)
+  <button class="add" onclick="addToCart('Kopi Ais',3)">Add</button>
+</div>
+
+<div class="item drink">
+  Milo Ais (RM5)
+  <button class="add" onclick="addToCart('Milo Ais',5)">Add</button>
+</div>
+
+<div class="item drink">
+  Sirap Bandung (RM4)
+  <button class="add" onclick="addToCart('Sirap Bandung',4)">Add</button>
+</div>
+
+<div class="item drink">
+  Air Limau (RM3)
+  <button class="add" onclick="addToCart('Air Limau',3)">Add</button>
+</div>
+
+  <div class="item dessert">
+    Cendol RM6
+    <button class="add" onclick="addToCart('Cendol',6)">Add</button>
+  </div>
+  
+<div class="item dessert">
+  Ais Kacang (RM6)
+  <button class="add" onclick="addToCart('Ais Kacang',6)">Add</button>
+</div>
+
+<div class="item dessert">
+  Kuih Lapis (RM4)
+  <button class="add" onclick="addToCart('Kuih Lapis',4)">Add</button>
+</div>
+
+<div class="item dessert">
+  Puding Karamel (RM5)
+  <button class="add" onclick="addToCart('Puding Karamel',5)">Add</button>
+</div>
+
+<div class="item dessert">
+  Bubur Pulut Hitam (RM5)
+  <button class="add" onclick="addToCart('Bubur Pulut Hitam',5)">Add</button>
+</div>
+
+</div>
+
+<!-- CART -->
+<div class="cart">
+  <h2>Cart</h2>
+  <div id="cart"></div>
+  <h3>Total: RM <span id="total">0</span></h3>
+  <button class="checkout" onclick="checkout()">Checkout</button>
+</div>
+
+</div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let menu = JSON.parse(localStorage.getItem("menuData")) || [];
+
+/* ADD TO CART */
+function addToCart(name, price){
+
+  let item = cart.find(i => i.name === name);
+
+  if(item){
+    item.qty++;
+  } else {
+    cart.push({name, price, qty:1});
+  }
+
+  saveCart();
+  renderCart();
+}
+
+/* SAVE CART */
+function saveCart(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+/* RENDER CART */
+function renderCart(){
+
+  let cartDiv = document.getElementById("cart");
+  cartDiv.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+
+    total += item.price * item.qty;
+
+    cartDiv.innerHTML += `
+      <div class="cart-item">
+        <b>${item.name}</b><br>
+        RM${item.price}
+
+        <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
+
+          <button onclick="changeQty(${index},-1)"
+            style="width:32px;height:32px;border-radius:8px;border:none;background:#ddd;cursor:pointer;">-</button>
+
+          <span>${item.qty}</span>
+
+          <button onclick="changeQty(${index},1)"
+            style="width:32px;height:32px;border-radius:8px;border:none;background:#ddd;cursor:pointer;">+</button>
+
+          <button onclick="removeItem(${index})"
+            style="margin-left:auto;background:crimson;color:white;border:none;padding:6px 10px;border-radius:8px;cursor:pointer;">
+            Remove
+          </button>
+
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+function renderMenu(){
+
+  const menuBox = document.querySelector(".menu");
+
+  let html = `
+    <h2>Bumbu Babah Menu 🍛</h2>
+
+    <div class="category-tabs">
+      <button class="tab-btn active" onclick="filterMenu(event,'all')">All</button>
+      <button class="tab-btn" onclick="filterMenu(event,'rice')">Rice</button>
+      <button class="tab-btn" onclick="filterMenu(event,'chicken')">Chicken</button>
+      <button class="tab-btn" onclick="filterMenu(event,'beef')">Beef</button>
+      <button class="tab-btn" onclick="filterMenu(event,'seafood')">Seafood</button>
+      <button class="tab-btn" onclick="filterMenu(event,'vegetables')">Vegetables</button>
+      <button class="tab-btn" onclick="filterMenu(event,'drink')">Drink</button>
+      <button class="tab-btn" onclick="filterMenu(event,'dessert')">Dessert</button>
+    </div>
+
+    <div id="menuItems">
+  `;
+
+  menu.forEach(item => {
+    html += `
+      <div class="item ${item.category}">
+        ${item.name} (RM${item.price})
+        <button class="add" onclick="addToCart('${item.name}', ${item.price})">Add</button>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  menuBox.innerHTML = html;
+  let activeCategory = "all";
+}
+
+/* QTY */
+function changeQty(index, value){
+
+  cart[index].qty += value;
+
+  if(cart[index].qty <= 0){
+    cart.splice(index,1);
+  }
+
+  saveCart();
+  renderCart();
+}
+
+/* REMOVE */
+function removeItem(index){
+  cart.splice(index,1);
+  saveCart();
+  renderCart();
+}
+
+/* CHECKOUT */
+function checkout(){
+
+  if(cart.length === 0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  let name = prompt("Enter your name:");
+  if(!name) return;
+
+  let total = 0;
+
+  cart.forEach(item=>{
+    total += item.price * item.qty;
+  });
+
+  // 🧠 CREATE SNAPSHOT (IMPORTANT)
+  let order = {
+    name: name,
+    items: JSON.parse(JSON.stringify(cart)), // clone cart
+    total: total,
+    date: new Date().toLocaleString()
+  };
+
+  // save for admin
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders.push(order);
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  // save FOR INVOICE PAGE (NEW FIX)
+  localStorage.setItem("lastOrder", JSON.stringify(order));
+
+  // clear cart AFTER save
+  cart = [];
+  saveCart();
+  renderCart();
+
+  // go invoice
+  window.location.href = "invoice.html";
+}
+
+setInterval(()=>{
+  let newMenu = JSON.parse(localStorage.getItem("menuData")) || [];
+
+  // hanya update kalau berubah
+  if(JSON.stringify(newMenu) !== JSON.stringify(menu)){
+    menu = newMenu;
+    renderMenu();
+
+    // restore filter lepas render
+    setTimeout(()=>{
+      document.querySelectorAll('.tab-btn').forEach(btn=>{
+        btn.classList.remove('active');
+        if(btn.textContent.toLowerCase() === activeCategory){
+          btn.classList.add('active');
+        }
+      });
+
+      filterMenu({currentTarget: document.querySelector('.tab-btn.active')}, activeCategory);
+    }, 50);
+  }
+
+}, 2000);
+
+/* CATEGORY FILTER FIXED */
+function filterMenu(event, category){
+
+  activeCategory = category;
+
+  const items = document.querySelectorAll('.item');
+  const buttons = document.querySelectorAll('.tab-btn');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+
+  items.forEach(item => {
+
+    if(category === 'all'){
+      item.style.display = "flex";
+    } else {
+      item.style.display = item.classList.contains(category)
+        ? "flex"
+        : "none";
+    }
+  });
+}
+
+/* INIT */
+renderMenu();
+renderCart();
+
+</script>
+
+</body>
+</html>
