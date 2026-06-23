@@ -95,6 +95,50 @@ body::after {
   color: white;
 }
 
+.back-btn{
+
+  background: linear-gradient(135deg,#ff5a1f,#ff8c42);
+  color:white;
+
+  border:none;
+  padding:14px 35px;
+
+  border-radius:999px;
+
+  font-size:16px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  box-shadow:0 10px 25px rgba(255,90,31,0.4);
+
+  transition:0.3s ease;
+
+  backdrop-filter:blur(10px);
+
+}
+
+
+.back-btn:hover{
+
+  transform:translateY(-4px);
+
+  background:linear-gradient(135deg,#111,#333);
+
+  box-shadow:0 15px 30px rgba(0,0,0,0.35);
+
+}
+
+.buttons{
+
+  margin-top:40px;
+
+  display:flex;
+
+  justify-content:center;
+
+}
+
 /* ITEM */
 .item {
   border-bottom: 1px solid #eee;
@@ -333,6 +377,14 @@ body::after {
 
 </div>
 
+<div class="buttons">
+
+  <button class="back-btn" onclick="goBack()">
+    Back To Home
+  </button>
+
+</div>
+
 <script>
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -542,6 +594,10 @@ function filterMenu(event, category){
     }
   });
 }
+
+  function goBack(){
+    window.location.href = "index.html";
+  }
 
 /* INIT */
 renderMenu();
