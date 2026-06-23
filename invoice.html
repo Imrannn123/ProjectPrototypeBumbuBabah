@@ -6,6 +6,71 @@
   <title>Bumbu Babah Invoice</title>
 
   <style>
+  
+  /* =========================
+   MOBILE RESPONSIVE FIX
+========================= */
+
+@media screen and (max-width: 768px) {
+
+  body {
+    padding: 15px;
+  }
+
+  .invoice {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .invoice-title {
+    text-align: left;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  table th,
+  table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .total-box h2 {
+    font-size: 24px;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+  
+  .back-btn{
+  background: #ddd;
+}
+
+	.next-btn{
+  background: #3498db;
+  color: white;
+}
+
+  button {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+}
 
     body{
       font-family: Arial, sans-serif;
@@ -138,7 +203,7 @@
     <div class="top">
 
       <div class="logo">
-        🍔 Bumbu Babah
+        Bumbu Babah
       </div>
 
       <div class="invoice-title">
@@ -175,15 +240,21 @@
       <input type="text" placeholder="Enter customer name">
     </div>
 
-    <div class="buttons">
-      <button class="back-btn" onclick="goBack()">
-        Back
-      </button>
+<div class="buttons">
 
-     <button class="print-btn" onclick="finishOrder()">
-  Print Invoice
-</button>
-    </div>
+  <button class="back-btn" onclick="goBack()">
+    Back
+  </button>
+
+  <button class="next-btn" onclick="goReview()">
+    Next
+  </button>
+
+  <button class="print-btn" onclick="finishOrder()">
+    Print Invoice
+  </button>
+
+</div>
 
   </div>
 
@@ -249,7 +320,7 @@ document.querySelector("input").disabled = true;
     "TOTAL: RM " + grandTotal.toFixed(2);
 	
 	/* CLEAR CART AUTO */
-clearCart();
+
 
   document.getElementById("date").innerText =
     new Date().toLocaleString();
@@ -257,6 +328,13 @@ clearCart();
   function goBack(){
     window.location.href = "customer.html";
   }
+  
+  function goReview(){
+
+  localStorage.removeItem("cart");
+
+  window.location.href = "review.html";
+}
 
 </script>
 
