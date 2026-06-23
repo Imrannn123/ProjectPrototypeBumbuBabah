@@ -5,67 +5,393 @@
 <title>Admin Panel</title>
 
 <style>
-body{
-  font-family: Arial;
-  background:#f4f4f4;
-  margin:0;
+
+*{
+  box-sizing:border-box;
+  font-family:'Segoe UI',Arial,sans-serif;
 }
+
+
+body{
+
+  margin:0;
+  background:#f5f6fa;
+  color:#222;
+
+}
+
+
+/* HEADER */
 
 header{
-  background:black;
+
+  height:75px;
+
+  background:
+  linear-gradient(135deg,#111,#333);
+
   color:white;
-  padding:15px;
-  text-align:center;
-  font-size:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:26px;
+  font-weight:700;
+
+  letter-spacing:1px;
+
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+
 }
+
+
+/* DASHBOARD */
 
 .container{
+
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  padding:20px;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:25px;
+
+  padding:30px;
+
 }
+
+
+/* CARD */
 
 .box{
+
   background:white;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.1);
-  max-height:80vh;
-  overflow:auto;
+
+  padding:25px;
+
+  border-radius:25px;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,.08);
+
+  border:1px solid #eee;
+
+  transition:.3s ease;
+
 }
 
-input, button{
-  padding:10px;
-  margin:5px 0;
-  width:100%;
+
+.box:hover{
+
+ transform:translateY(-5px);
+
+ box-shadow:
+ 0 20px 45px rgba(0,0,0,.12);
+
 }
+
+
+
+.box h2{
+
+ margin-top:0;
+
+ color:#111;
+
+}
+
+
+/* INPUT */
+
+input{
+
+ width:100%;
+
+ padding:14px;
+
+ margin:8px 0;
+
+ border-radius:12px;
+
+ border:1px solid #ddd;
+
+ outline:none;
+
+ font-size:15px;
+
+ transition:.2s;
+
+}
+
+
+input:focus{
+
+ border-color:#ff5a1f;
+
+ box-shadow:0 0 0 3px rgba(255,90,31,.15);
+
+}
+
+.admin-nav{
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+padding:20px;
+
+background:#fff;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+position:sticky;
+
+top:0;
+
+z-index:10;
+
+}
+
+
+.admin-nav button{
+
+width:auto;
+
+padding:10px 22px;
+
+border-radius:999px;
+
+background:#111;
+
+color:white;
+
+transition:.3s;
+
+}
+
+
+.admin-nav button:hover{
+
+background:#ff5a1f;
+
+transform:translateY(-3px);
+
+}
+
+
+
+
+
+/* BUTTON */
+
 
 button{
-  cursor:pointer;
-  border:none;
-  border-radius:8px;
+
+ width:100%;
+
+ padding:12px;
+
+ border:none;
+
+ border-radius:12px;
+
+ cursor:pointer;
+
+ font-weight:600;
+
+ transition:.25s;
+
 }
 
-.add-btn{background:black;color:white;}
-.edit-btn{background:orange;color:white;}
-.delete-btn{background:red;color:white;}
+
+button:hover{
+
+ transform:translateY(-2px);
+
+}
+
+
+
+.add-btn{
+
+ background:#111;
+
+ color:white;
+
+}
+
+
+.add-btn:hover{
+
+ background:#ff5a1f;
+
+}
+
+
+
+.edit-btn{
+
+ background:#ff9800;
+
+ color:white;
+
+}
+
+
+
+.delete-btn{
+
+ background:#e53935;
+
+ color:white;
+
+ margin-top:10px;
+
+}
+
+
+/* MENU ITEM */
+
 
 .item{
-  border-bottom:1px solid #eee;
-  padding:10px 0;
+
+ background:#fafafa;
+
+ margin:12px 0;
+
+ padding:15px;
+
+ border-radius:15px;
+
+ border-left:5px solid #ff5a1f;
+
+ transition:.2s;
+
 }
+
+
+
+.item:hover{
+
+ background:#fff4ee;
+
+ transform:translateX(5px);
+
+}
+
+
+
+/* REVIEW */
+
+
+#avgRating{
+
+ color:#ff9800;
+
+ font-size:25px;
+
+ font-weight:bold;
+
+}
+
+
+#totalReviews{
+
+ color:#ff5a1f;
+
+ font-weight:bold;
+
+}
+
+
+/* ORDER */
+
+#orderList .item{
+
+ border-left-color:#22c55e;
+
+}
+
+
+/* SCROLL */
+
+.box::-webkit-scrollbar{
+
+ width:8px;
+
+}
+
+
+.box::-webkit-scrollbar-thumb{
+
+ background:#ff5a1f;
+
+ border-radius:20px;
+
+}
+
+
+/* RESPONSIVE */
+
+
+@media(max-width:900px){
+
+.container{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+
 </style>
 </head>
 
 <body>
 
-<header>🍔 Bumbu Babah Admin Panel</header>
+<header>
+Bumbu Babah Admin Dashboard
+</header>
+
+<nav class="admin-nav">
+
+<button onclick="scrollToSection('reviews')">
+ Reviews
+</button>
+
+<button onclick="scrollToSection('menu')">
+ Menu
+</button>
+
+<button onclick="scrollToSection('orders')">
+Live Orders
+</button>
+
+</nav>
 
 <div class="container">
+<div class="box" id="reviews">
+
+<h2>Customer Reviews ⭐</h2>
+
+  <p>
+    Average Rating:
+    <span id="avgRating">0</span> ⭐
+  </p>
+
+  <p>
+    Total Reviews:
+    <span id="totalReviews">0</span>
+  </p>
+
+  <div id="reviewList"></div>
+</div>
 
 <!-- MENU MANAGEMENT -->
-<div class="box">
+<div class="box" id="menu">
 <h2>Menu Management</h2>
 
 <input id="name" placeholder="Item name">
@@ -80,7 +406,7 @@ button{
 </div>
 
 <!-- LIVE ORDERS -->
-<div class="box">
+<div class="box" id="orders">
 <h2>Live Orders 🔴</h2>
 <div id="orderList"></div>
 <button class="delete-btn" onclick="clearOrders()">
@@ -212,11 +538,100 @@ function renderOrders(){
   });
 }
 
+function deleteReview(index){
+
+  let reviews =
+    JSON.parse(localStorage.getItem("reviews")) || [];
+
+  reviews.splice(index,1);
+
+  localStorage.setItem(
+    "reviews",
+    JSON.stringify(reviews)
+  );
+
+  renderReviews();
+
+}
+
+function renderReviews(){
+
+  let reviews =
+    JSON.parse(localStorage.getItem("reviews")) || [];
+
+  let box =
+    document.getElementById("reviewList");
+
+  if(!box) return;
+
+  box.innerHTML = "";
+
+  document.getElementById("totalReviews").innerText =
+    reviews.length;
+
+  let totalRating = 0;
+
+  reviews.forEach((review,index)=>{
+
+    totalRating += review.rating;
+
+    box.innerHTML += `
+      <div class="item">
+
+        <b>${review.customer}</b>
+
+        <br>
+
+        Rating:
+        ${"⭐".repeat(review.rating)}
+
+        <br>
+
+        ${review.comment}
+
+        <br>
+
+        <small>${review.date}</small>
+
+        <button
+          class="delete-btn"
+          onclick="deleteReview(${index})">
+
+          Delete
+
+        </button>
+
+      </div>
+    `;
+
+  });
+
+  let average =
+    reviews.length > 0
+      ? (totalRating / reviews.length).toFixed(1)
+      : 0;
+
+  document.getElementById("avgRating").innerText =
+    average;
+
+}
+
+function scrollToSection(id){
+
+document
+.getElementById(id)
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
 /* AUTO REFRESH LIVE ORDERS */
 setInterval(renderOrders, 2000);
 
 renderMenu();
 renderOrders();
+renderReviews();
 
 </script>
 
