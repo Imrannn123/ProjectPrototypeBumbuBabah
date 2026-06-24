@@ -279,6 +279,28 @@ if(!order){
 }
 
   let invoiceItems = document.getElementById("invoiceItems");
+  
+  order.items.forEach(item=>{
+
+invoiceItems.innerHTML +=`
+
+<tr>
+
+<td>${item.name}</td>
+
+<td>${item.qty}</td>
+
+<td>RM${item.price}</td>
+
+<td>
+RM${item.price*item.qty}
+</td>
+
+</tr>
+
+`;
+
+});
 
 let subtotal = 0;
 
