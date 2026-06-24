@@ -120,8 +120,9 @@ function submitReview(){
   let reviews =
     JSON.parse(localStorage.getItem("reviews")) || [];
 
-  let order =
-    JSON.parse(localStorage.getItem("lastOrder"));
+let order =
+JSON.parse(localStorage.getItem("lastOrder")) || 
+{name:"Guest"};
 
   reviews.push({
     customer: order ? order.name : "Guest",
