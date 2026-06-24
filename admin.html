@@ -1,637 +1,1051 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Admin Panel</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bumbu Babah Restaurant</title>
 
-<style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-*{
-  box-sizing:border-box;
-  font-family:'Segoe UI',Arial,sans-serif;
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f8f8f8;
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #111;
 }
 
-
-body{
-
-  margin:0;
-  background:#f5f6fa;
-  color:#222;
-
+.logo img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
 }
 
-
-/* HEADER */
-
-header{
-
-  height:75px;
-
-  background:
-  linear-gradient(135deg,#111,#333);
-
-  color:white;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:26px;
-  font-weight:700;
-
-  letter-spacing:1px;
-
-  box-shadow:0 8px 25px rgba(0,0,0,.2);
-
+.logo img:hover {
+  transform: rotate(8deg) scale(1.05);
 }
 
-
-/* DASHBOARD */
-
-.container{
-
-  display:grid;
-
-  grid-template-columns:repeat(2,1fr);
-
-  gap:25px;
-
-  padding:30px;
-
-}
-
-
-/* CARD */
-
-.box{
-
-  background:white;
-
-  padding:25px;
-
-  border-radius:25px;
-
-  box-shadow:
-  0 15px 35px rgba(0,0,0,.08);
-
-  border:1px solid #eee;
-
-  transition:.3s ease;
-
-}
-
-
-.box:hover{
-
- transform:translateY(-5px);
-
- box-shadow:
- 0 20px 45px rgba(0,0,0,.12);
-
-}
-
-
-
-.box h2{
-
- margin-top:0;
-
- color:#111;
-
-}
-
-
-/* INPUT */
-
-input{
-
- width:100%;
-
- padding:14px;
-
- margin:8px 0;
-
- border-radius:12px;
-
- border:1px solid #ddd;
-
- outline:none;
-
- font-size:15px;
-
- transition:.2s;
-
-}
-
-
-input:focus{
-
- border-color:#ff5a1f;
-
- box-shadow:0 0 0 3px rgba(255,90,31,.15);
-
-}
-
-.admin-nav{
-
-display:flex;
-
-justify-content:center;
-
-gap:15px;
-
-padding:20px;
-
-background:#fff;
-
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-
-position:sticky;
-
-top:0;
-
-z-index:10;
-
-}
-
-
-.admin-nav button{
-
-width:auto;
-
-padding:10px 22px;
-
-border-radius:999px;
-
-background:#111;
-
-color:white;
-
-transition:.3s;
-
-}
-
-
-.admin-nav button:hover{
-
-background:#ff5a1f;
-
-transform:translateY(-3px);
-
-}
-
-
-
-
-
-/* BUTTON */
-
-
-button{
-
- width:100%;
-
- padding:12px;
-
- border:none;
-
- border-radius:12px;
-
- cursor:pointer;
-
- font-weight:600;
-
- transition:.25s;
-
-}
-
-
-button:hover{
-
- transform:translateY(-2px);
-
-}
-
-
-
-.add-btn{
-
- background:#111;
-
- color:white;
-
-}
-
-
-.add-btn:hover{
-
- background:#ff5a1f;
-
-}
-
-
-
-.edit-btn{
-
- background:#ff9800;
-
- color:white;
-
-}
-
-
-
-.delete-btn{
-
- background:#e53935;
-
- color:white;
-
- margin-top:10px;
-
-}
-
-
-/* MENU ITEM */
-
-
-.item{
-
- background:#fafafa;
-
- margin:12px 0;
-
- padding:15px;
-
- border-radius:15px;
-
- border-left:5px solid #ff5a1f;
-
- transition:.2s;
-
-}
-
-
-
-.item:hover{
-
- background:#fff4ee;
-
- transform:translateX(5px);
-
-}
-
-
-
-/* REVIEW */
-
-
-#avgRating{
-
- color:#ff9800;
-
- font-size:25px;
-
- font-weight:bold;
-
-}
-
-
-#totalReviews{
-
- color:#ff5a1f;
-
- font-weight:bold;
-
-}
-
-
-/* ORDER */
-
-#orderList .item{
-
- border-left-color:#22c55e;
-
-}
-
-
-/* SCROLL */
-
-.box::-webkit-scrollbar{
-
- width:8px;
-
-}
-
-
-.box::-webkit-scrollbar-thumb{
-
- background:#ff5a1f;
-
- border-radius:20px;
-
-}
-
-
-/* RESPONSIVE */
-
-
-@media(max-width:900px){
-
-.container{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-
-</style>
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 35px;
+    }
+
+    .nav-links a {
+      color: #333;
+      font-size: 15px;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #ff5a1f;
+    }
+
+    .nav-btn {
+      padding: 12px 24px;
+      background: #111;
+      color: white !important;
+      border-radius: 999px;
+      transition: 0.3s ease;
+    }
+
+    .nav-btn:hover {
+      background: #ff5a1f;
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      padding: 120px 8% 80px;
+      gap: 60px;
+      background: linear-gradient(to bottom right, #fff, #f3f3f3);
+    }
+
+    .hero-text {
+      animation: fadeUp 1s ease;
+    }
+
+    .hero-text span {
+      background: rgba(255, 90, 31, 0.1);
+      color: #ff5a1f;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+
+    .hero-text h1 {
+      font-size: 72px;
+      line-height: 1.1;
+      margin-bottom: 25px;
+      font-weight: 800;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 35px;
+      max-width: 600px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      padding: 16px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .primary-btn {
+      background: #111;
+      color: white;
+    }
+
+    .primary-btn:hover {
+      background: #ff5a1f;
+      transform: translateY(-3px);
+    }
+
+    .secondary-btn {
+      border: 1px solid #ddd;
+      color: #111;
+      background: white;
+    }
+
+    .secondary-btn:hover {
+      border-color: #111;
+      transform: translateY(-3px);
+    }
+
+    .hero-image {
+      position: relative;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .hero-image img {
+      border-radius: 30px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      height: 700px;
+      object-fit: cover;
+    }
+
+    /* FEATURES */
+
+    .features {
+      padding: 100px 8%;
+      background: white;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .section-title p {
+      color: #666;
+      max-width: 650px;
+      margin: auto;
+      line-height: 1.8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: #fafafa;
+      border-radius: 24px;
+      padding: 35px;
+      transition: 0.4s ease;
+      border: 1px solid transparent;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    }
+
+    .feature-card h3 {
+      margin: 20px 0 15px;
+      font-size: 24px;
+    }
+
+    .feature-card p {
+      color: #666;
+      line-height: 1.8;
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      background: rgba(255, 90, 31, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+    }
+
+    /* POPULAR MENU */
+
+    .popular {
+      padding: 100px 8%;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: 0.4s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .menu-card img {
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .menu-content {
+      padding: 25px;
+    }
+
+    .menu-content h3 {
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    .menu-content p {
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .menu-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ff5a1f;
+    }
+
+    .order-btn {
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: #111;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .order-btn:hover {
+      background: #ff5a1f;
+    }
+
+    /* CTA */
+
+    .cta {
+      padding: 100px 8%;
+    }
+
+    .cta-box {
+      background: #111;
+      border-radius: 40px;
+      padding: 80px;
+      text-align: center;
+      color: white;
+    }
+
+    .cta-box h2 {
+      font-size: 56px;
+      margin-bottom: 20px;
+    }
+
+    .cta-box p {
+      color: rgba(255,255,255,0.7);
+      max-width: 700px;
+      margin: auto auto 35px;
+      line-height: 1.8;
+    }
+
+    .cta-box a {
+      display: inline-block;
+      padding: 16px 32px;
+      background: #ff5a1f;
+      color: white;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .cta-box a:hover {
+      transform: translateY(-3px);
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 35px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      background: white;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    footer p {
+      color: #666;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .footer-links a {
+      color: #444;
+    }
+
+    /* ANIMATION */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1100px) {
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text {
+        text-align: center;
+      }
+
+      .hero-text p {
+        margin-inline: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-image img {
+        height: 500px;
+      }
+
+    }
+
+    /* AUTH MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      width: 420px;
+      background: white;
+      padding: 40px;
+      border-radius: 30px;
+      position: relative;
+      animation: fadeUp 0.5s ease;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .modal-box h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .modal-box p {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    .auth-form input:focus {
+      border-color: #ff5a1f;
+    }
+
+    .auth-form button {
+      padding: 16px;
+      border: none;
+      border-radius: 999px;
+      background: #111;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .auth-form button:hover {
+      background: #ff5a1f;
+    }
+
+    .login-btn {
+      padding: 12px 24px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .login-btn:hover {
+      border-color: #111;
+      transform: translateY(-2px);
+    }
+
+    /* ================= STYLE TAMBAHAN: GOOGLE DUMMY LINK ================= */
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+      color: #888;
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #eee;
+    }
+
+    .divider:not(:empty)::before {
+      margin-right: .5em;
+    }
+
+    .divider:not(:empty)::after {
+      margin-left: .5em;
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 14px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 999px;
+      color: #333;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-decoration: none;
+    }
+
+    .google-btn:hover {
+      background: #f9f9f9;
+      border-color: #bbb;
+      transform: translateY(-2px);
+    }
+
+    .google-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+    /* ===================================================================== */
+
+    @media (max-width: 500px) {
+
+      .modal-box {
+        width: 90%;
+        padding: 30px;
+      }
+
+    }
+
+    @media (max-width: 768px) {
+
+      .navbar {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-text h1 {
+        font-size: 48px;
+      }
+
+      .section-title h2,
+      .cta-box h2 {
+        font-size: 36px;
+      }
+
+      .cta-box {
+        padding: 50px 30px;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+    }
+
+  </style>
 </head>
-
 <body>
 
-<header>
-Bumbu Babah Staff Dashboard
-</header>
-
-<nav class="admin-nav">
-
-<button onclick="scrollToSection('reviews')">
- Reviews
-</button>
-
-<button onclick="scrollToSection('menu')">
- Menu
-</button>
-
-<button onclick="scrollToSection('orders')">
-Live Orders
-</button>
-
-</nav>
-
-<div class="container">
-<div class="box" id="reviews">
-
-<h2>Customer Reviews ⭐</h2>
-
-  <p>
-    Average Rating:
-    <span id="avgRating">0</span> ⭐
-  </p>
-
-  <p>
-    Total Reviews:
-    <span id="totalReviews">0</span>
-  </p>
-
-  <div id="reviewList"></div>
+  <header class="navbar">
+    <div class="logo">
+  <img src="images/logoBumbubabah.jpeg" alt="Bumbu Babah Logo">
+  <span>Bumbu Babah</span>
 </div>
 
-<!-- MENU MANAGEMENT -->
-<div class="box" id="menu">
-<h2>Menu Management</h2>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#menu">Menu</a>
+      <a href="#contact">Contact</a>
 
-<input id="name" placeholder="Item name">
-<input id="price" placeholder="Price">
-<input id="category" placeholder="Category (rice/chicken/etc)">
+      <button class="login-btn" onclick="openLogin()">
+        Login
+      </button>
 
-<button class="add-btn" onclick="addItem()">Add Menu</button>
+      <button class="nav-btn" onclick="openRegister()">
+        Register
+      </button>
+    </nav>
+  </header>
 
-<hr>
+  <section class="hero" id="home">
 
-<div id="menuList"></div>
-</div>
+    <div class="hero-text">
+      <span>🔥 Modern Restaurant Experience</span>
 
-<!-- LIVE ORDERS -->
-<div class="box" id="orders">
-<h2>Live Orders 🔴</h2>
-<div id="orderList"></div>
-<button class="delete-btn" onclick="clearOrders()">
-  Clear All Orders
-</button>
-</div>
+      <h1>
+        Delicious Food
+        Delivered To You
+      </h1>
 
-</div>
+      <p>
+        Experience premium restaurant ordering with modern design,
+        smooth ordering flow, and fresh delicious meals prepared
+        with love every single day.
+      </p>
 
-<script>
-
-let menu = JSON.parse(localStorage.getItem("menuData")) || [];
-
-if(menu.length === 0){
-  menu = [
-    {name:"Nasi Putih", price:3, category:"rice"},
-    {name:"Nasi Lemak Padang", price:5, category:"rice"},
-    {name:"Nasi Kerabu Janda 3 Rasa", price:8, category:"rice"},
-
-    {name:"Ayam Rendang", price:12, category:"chicken"},
-    {name:"Ayam Pop", price:11, category:"chicken"},
-    {name:"Ayam Gulai", price:10, category:"chicken"},
-    {name:"Ayam Goreng", price:7, category:"chicken"},
-
-    {name:"Daging Rendang", price:15, category:"beef"},
-    {name:"Daging Gulai", price:12, category:"beef"},
-    {name:"Daging Dendeng", price:10, category:"beef"},
-    {name:"Wagyu A5 Miyazaki", price:67, category:"beef"},
-
-    {name:"Ikan Bakar", price:14, category:"seafood"},
-    {name:"Ikan Gulai", price:12, category:"seafood"},
-    {name:"Ikan Steam", price:15, category:"seafood"},
-
-    {name:"Kangkung Belacan", price:7, category:"vegetables"},
-    {name:"Sayur Nangka", price:7, category:"vegetables"},
-    {name:"Terung Balado", price:6, category:"vegetables"},
-    {name:"Tempe Goreng", price:5, category:"vegetables"},
-
-    {name:"Teh Ais", price:3, category:"drink"},
-    {name:"Kopi Ais", price:3, category:"drink"},
-    {name:"Milo Ais", price:5, category:"drink"},
-
-    {name:"Cendol", price:6, category:"dessert"},
-    {name:"Ais Kacang", price:6, category:"dessert"},
-  ];
-
-  localStorage.setItem("menuData", JSON.stringify(menu));
-}
-
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
-
-/* SAVE MENU */
-function saveMenu(){
-  localStorage.setItem("menuData", JSON.stringify(menu));
-}
-
-/*CLEAR ORDER*/
-function clearOrders(){
-
-  let confirmDelete = confirm("Are you sure want to delete ALL orders?");
-
-  if(!confirmDelete) return;
-
-  localStorage.removeItem("orders");
-
-  renderOrders();
-
-  alert("All orders cleared!");
-}
-
-/* ADD ITEM */
-function addItem(){
-  let name = document.getElementById("name").value;
-  let price = document.getElementById("price").value;
-  let category = document.getElementById("category").value || "other";
-
-  if(!name || !price) return alert("Fill all fields");
-
-  menu.push({name, price, category});
-  saveMenu();
-  renderMenu();
-}
-
-/* DELETE */
-function deleteItem(index){
-  menu.splice(index,1);
-  saveMenu();
-  renderMenu();
-}
-
-/* RENDER MENU */
-function renderMenu(){
-  let box = document.getElementById("menuList");
-  box.innerHTML = "";
-
-  menu.forEach((item,index)=>{
-    box.innerHTML += `
-      <div class="item">
-        <b>${item.name}</b> (${item.category || "other"}) - RM${item.price}
-        <button class="delete-btn" onclick="deleteItem(${index})">Delete</button>
+      <div class="hero-buttons">
+        <a href="#menu" class="primary-btn">Browse Menu</a>
+        <a href="#features" class="secondary-btn">Learn More</a>
       </div>
-    `;
-  });
-}
+    </div>
 
-/* LIVE ORDERS */
-function renderOrders(){
-  orders = JSON.parse(localStorage.getItem("orders")) || [];
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=1200" alt="Malay Food">
+    </div>
 
-  let box = document.getElementById("orderList");
-  box.innerHTML = "";
+  </section>
 
-  if(orders.length === 0){
-    box.innerHTML = "<p>No orders yet</p>";
-    return;
-  }
+  <section class="features" id="features">
 
-  orders.forEach((order,index)=>{
-    box.innerHTML += `
-      <div class="item">
-        <b>Customer:</b> ${order.name}<br>
-        <b>Total:</b> RM${order.total}<br>
-        <b>Items:</b><br>
-        ${order.items.map(i=>`- ${i.name} x${i.qty}`).join("<br>")}
-        <br><br>
-        <small>${order.date}</small>
+    <div class="section-title">
+      <h2>Why Choose Us</h2>
+
+      <p>
+        Designed with modern restaurant experiences in mind — fast,
+        smooth, clean, and premium.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="icon">🍔</div>
+        <h3>Fresh Ingredients</h3>
+        <p>
+          Every meal is prepared using fresh premium ingredients for the best quality and taste.
+        </p>
       </div>
-    `;
-  });
-}
 
-function deleteReview(index){
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3>Fast Delivery</h3>
+        <p>
+          Quick and reliable delivery system that keeps your food fresh and warm.
+        </p>
+      </div>
 
-  let reviews =
-    JSON.parse(localStorage.getItem("reviews")) || [];
+      <div class="feature-card">
+        <div class="icon">⭐</div>
+        <h3>Top Rated</h3>
+        <p>
+          Trusted by thousands of customers with excellent reviews and ratings.
+        </p>
+      </div>
 
-  reviews.splice(index,1);
+    </div>
 
-  localStorage.setItem(
-    "reviews",
-    JSON.stringify(reviews)
-  );
+  </section>
 
-  renderReviews();
+  <section class="popular" id="menu">
 
-}
+    <div class="section-title">
+      <h2>Popular Dishes</h2>
 
-function renderReviews(){
+      <p>
+        Discover our best-selling meals loved by customers every day.
+      </p>
+    </div>
 
-  let reviews =
-    JSON.parse(localStorage.getItem("reviews")) || [];
+<div class="menu-grid">
 
-  let box =
-    document.getElementById("reviewList");
+  <div class="menu-card">
+    <img src="https://images.unsplash.com/photo-1516684732162-798a0062be99?q=80&w=1200" alt="Nasi Putih">
 
-  if(!box) return;
+    <div class="menu-content">
+      <h3>Nasi Putih</h3>
 
-  box.innerHTML = "";
+      <p>
+        Nasi putih panas dan lembut yang dimasak segar setiap hari.
+      </p>
 
-  document.getElementById("totalReviews").innerText =
-    reviews.length;
+      <div class="menu-footer">
+        <span class="price">RM3.00</span>
+        <button class="order-btn" onclick="openLogin()">Order</button>
+      </div>
+    </div>
+  </div>
 
-  let totalRating = 0;
+  <div class="menu-card">
+    <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?q=80&w=1200" alt="Ayam Bakar">
 
-  reviews.forEach((review,index)=>{
+    <div class="menu-content">
+      <h3>Ayam Bakar</h3>
 
-    totalRating += review.rating;
+      <p>
+        Ayam bakar berempah dengan aroma asap yang menyelerakan.
+      </p>
 
-    box.innerHTML += `
-      <div class="item">
+      <div class="menu-footer">
+        <span class="price">RM12.00</span>
+        <button class="order-btn" onclick="openLogin()">Order</button>
+      </div>
+    </div>
+  </div>
 
-        <b>${review.customer}</b>
+  <div class="menu-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Kampung_Paya_Jaras_Tengah%2C_Selangor_20250112_111351.jpg/1280px-Kampung_Paya_Jaras_Tengah%2C_Selangor_20250112_111351.jpg" alt="Cendol">
 
-        <br>
+    <div class="menu-content">
+      <h3>Cendol</h3>
 
-        Rating:
-        ${"⭐".repeat(review.rating)}
+      <p>
+        Cendol tradisional dengan santan segar dan gula Melaka asli.
+      </p>
 
-        <br>
+      <div class="menu-footer">
+        <span class="price">RM6.00</span>
+        <button class="order-btn" onclick="openLogin()">Order</button>
+      </div>
+    </div>
+  </div>
 
-        ${review.comment}
+</div>
 
-        <br>
+  </section>
 
-        <small>${review.date}</small>
+  <section class="cta" id="contact">
 
-        <button
-          class="delete-btn"
-          onclick="deleteReview(${index})">
+    <div class="cta-box">
+      <h2>Ready To Order?</h2>
 
-          Delete
+      <p>
+        Start your modern food ordering experience today with FoodieHub.
+      </p>
 
+      <a href="#" onclick="openLogin()">Get Started</a>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2026 Bumbu Babah Restaurant. All rights reserved.</p>
+
+    <div class="footer-links">
+
+  <a href="images.html">
+    Instagram
+  </a>
+
+  <a href="facebook.html">
+    Facebook
+  </a>
+
+  <a href="tiktok.html">
+    TikTok
+  </a>
+
+</div>
+  </footer>
+
+  <div class="modal" id="loginModal">
+
+    <div class="modal-box">
+
+      <span class="close-btn" onclick="closeLogin()">
+        ✕
+      </span>
+
+      <h2>Welcome Back</h2>
+
+      <p>Login to continue your food ordering experience.</p>
+
+      <form class="auth-form" id="loginForm">
+
+        <input type="email" placeholder="Email Address" required>
+
+        <input type="password" placeholder="Password" required>
+
+        <button type="submit">Login</button>
+
+      </form>
+
+      <div class="divider">or log in with</div>
+
+      <a href="#" class="google-btn" onclick="alert('Google Sign-In!.')">
+        <svg viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Continue with Google
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="modal" id="registerModal">
+
+    <div class="modal-box">
+
+      <span class="close-btn" onclick="closeRegister()">
+        ✕
+      </span>
+
+      <h2>Create Account</h2>
+
+      <p>Join FoodieHub and start ordering delicious meals.</p>
+
+      <form class="auth-form" id="registerForm">
+
+        <input type="text" placeholder="Full Name">
+
+        <input type="email" placeholder="Email Address">
+
+        <input type="password" placeholder="Password">
+
+        <input type="password" placeholder="Confirm Password">
+
+        <button type="submit">
+          Register
         </button>
 
-      </div>
-    `;
+      </form>
 
-  });
+    </div>
 
-  let average =
-    reviews.length > 0
-      ? (totalRating / reviews.length).toFixed(1)
-      : 0;
+  </div>
 
-  document.getElementById("avgRating").innerText =
-    average;
+  <script>
 
+
+const loginModal = document.getElementById('loginModal');
+const registerModal = document.getElementById('registerModal');
+
+
+function openLogin(){
+    loginModal.classList.add('active');
 }
 
-function scrollToSection(id){
+
+function closeLogin(){
+    loginModal.classList.remove('active');
+}
+
+
+function openRegister(){
+    registerModal.classList.add('active');
+}
+
+
+function closeRegister(){
+    registerModal.classList.remove('active');
+}
+
+
+
+// LOGIN SYSTEM
 
 document
-.getElementById(id)
-.scrollIntoView({
-behavior:"smooth"
+.getElementById("loginForm")
+.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+
+    let email =
+    document.querySelector(
+    "#loginForm input[type='email']"
+    ).value;
+
+
+    let password =
+    document.querySelector(
+    "#loginForm input[type='password']"
+    ).value;
+
+
+
+    console.log(email,password);
+
+
+
+    // ADMIN
+
+    if(
+    email === "admin@mail.com" &&
+    password === "admin123"
+    ){
+
+        localStorage.removeItem("userRole");
+
+        localStorage.setItem(
+        "userRole",
+        "admin"
+        );
+
+
+        alert("Admin Login");
+
+
+        window.location.replace(
+        "admin.html"
+        );
+
+    }
+
+
+
+    // STAFF
+
+    if(
+
+    email === "staff@mail.com" &&
+    password === "staff123"
+
+    ){
+
+
+        localStorage.removeItem("userRole");
+
+        localStorage.setItem(
+        "userRole",
+        "staff"
+        );
+
+
+        alert("Staff Login");
+
+
+        window.location.replace(
+        "staff.html"
+        );
+
+
+    }
+
+
+
+    // CUSTOMER
+
+    if(
+    email !== "admin@mail.com" && email !== "staff@mail.com"
+    ){
+
+
+        localStorage.removeItem("userRole");
+
+        localStorage.setItem(
+        "userRole",
+        "customer"
+        );
+
+
+        alert("Customer Login");
+
+
+        window.location.replace(
+        "customer.html"
+        );
+
+
+    }
+
+
+
 });
-
-}
-
-/* AUTO REFRESH LIVE ORDERS */
-setInterval(renderOrders, 2000);
-
-renderMenu();
-renderOrders();
-renderReviews();
 
 </script>
 
