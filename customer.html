@@ -389,7 +389,36 @@ body::after {
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let menu = JSON.parse(localStorage.getItem("menuData")) || [];
+let menu = JSON.parse(localStorage.getItem("menuData")) || [
+
+{name:"Nasi Putih",price:3,category:"rice"},
+{name:"Nasi Lemak Padang",price:5,category:"rice"},
+{name:"Nasi Kerabu Janda 3 Rasa",price:8,category:"rice"},
+
+{name:"Ayam Rendang",price:12,category:"chicken"},
+{name:"Ayam Pop",price:11,category:"chicken"},
+{name:"Ayam Goreng",price:7,category:"chicken"},
+
+{name:"Daging Rendang",price:15,category:"beef"},
+{name:"Daging Gulai",price:12,category:"beef"},
+
+{name:"Ikan Bakar",price:14,category:"seafood"},
+
+{name:"Kangkung Belacan",price:7,category:"vegetables"},
+
+{name:"Teh Ais",price:3,category:"drink"},
+{name:"Kopi Ais",price:3,category:"drink"},
+
+{name:"Cendol",price:6,category:"dessert"},
+{name:"Ais Kacang",price:6,category:"dessert"}
+
+];
+
+
+localStorage.setItem(
+"menuData",
+JSON.stringify(menu)
+);
 
 /* ADD TO CART */
 function addToCart(name, price){
@@ -485,6 +514,7 @@ function renderMenu(){
 
   menuBox.innerHTML = html;
   let activeCategory = "all";
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 }
 
 /* QTY */
@@ -525,12 +555,21 @@ function checkout(){
   });
 
   // 🧠 CREATE SNAPSHOT (IMPORTANT)
-  let order = {
-    name: name,
-    items: JSON.parse(JSON.stringify(cart)), // clone cart
-    total: total,
-    date: new Date().toLocaleString()
-  };
+let order = {
+
+id: Date.now(),
+
+name:name,
+
+items:JSON.parse(JSON.stringify(cart)),
+
+total:Number(total),
+
+status:"Pending",
+
+date:new Date().toLocaleString()
+
+};
 
   // save for admin
   let orders = JSON.parse(localStorage.getItem("orders")) || [];
@@ -575,24 +614,37 @@ setInterval(()=>{
 /* CATEGORY FILTER FIXED */
 function filterMenu(event, category){
 
-  activeCategory = category;
+activeCategory = category;
 
-  const items = document.querySelectorAll('.item');
-  const buttons = document.querySelectorAll('.tab-btn');
+document.querySelectorAll('.tab-btn')
+.forEach(btn=>{
+btn.classList.remove('active');
+});
 
-  buttons.forEach(btn => btn.classList.remove('active'));
-  event.currentTarget.classList.add('active');
 
-  items.forEach(item => {
+if(event && event.currentTarget){
+event.currentTarget.classList.add('active');
+}
 
-    if(category === 'all'){
-      item.style.display = "flex";
-    } else {
-      item.style.display = item.classList.contains(category)
-        ? "flex"
-        : "none";
-    }
-  });
+
+document.querySelectorAll('.item')
+.forEach(item=>{
+
+if(category==="all"){
+item.style.display="flex";
+}
+
+else{
+
+item.style.display =
+item.classList.contains(category)
+?"flex"
+:"none";
+
+}
+
+});
+
 }
 
   function goBack(){
@@ -602,6 +654,7 @@ function filterMenu(event, category){
 /* INIT */
 renderMenu();
 renderCart();
+console.log(menu);
 
 </script>
 
