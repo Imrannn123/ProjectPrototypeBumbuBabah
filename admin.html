@@ -1,1051 +1,659 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bumbu Babah Restaurant</title>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: #f8f8f8;
-      color: #111;
-      overflow-x: hidden;
-    }
-
-    img {
-      width: 100%;
-      display: block;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    /* NAVBAR */
-
-    .navbar {
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-      padding: 20px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 28px;
-  font-weight: 800;
-  color: #111;
+<style>
+*{
+box-sizing:border-box;
+font-family:'Segoe UI',Arial;
 }
 
-.logo img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: 0.3s ease;
+body{
+margin:0;
+background:#f5f6fa;
 }
 
-.logo img:hover {
-  transform: rotate(8deg) scale(1.05);
+header{
+height:75px;
+background:#111;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:bold;
 }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 35px;
-    }
-
-    .nav-links a {
-      color: #333;
-      font-size: 15px;
-      font-weight: 500;
-      transition: 0.3s ease;
-    }
-
-    .nav-links a:hover {
-      color: #ff5a1f;
-    }
-
-    .nav-btn {
-      padding: 12px 24px;
-      background: #111;
-      color: white !important;
-      border-radius: 999px;
-      transition: 0.3s ease;
-    }
-
-    .nav-btn:hover {
-      background: #ff5a1f;
-      transform: translateY(-2px);
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      align-items: center;
-      padding: 120px 8% 80px;
-      gap: 60px;
-      background: linear-gradient(to bottom right, #fff, #f3f3f3);
-    }
-
-    .hero-text {
-      animation: fadeUp 1s ease;
-    }
-
-    .hero-text span {
-      background: rgba(255, 90, 31, 0.1);
-      color: #ff5a1f;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: 25px;
-    }
-
-    .hero-text h1 {
-      font-size: 72px;
-      line-height: 1.1;
-      margin-bottom: 25px;
-      font-weight: 800;
-    }
-
-    .hero-text p {
-      font-size: 18px;
-      color: #555;
-      line-height: 1.8;
-      margin-bottom: 35px;
-      max-width: 600px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .primary-btn,
-    .secondary-btn {
-      padding: 16px 32px;
-      border-radius: 999px;
-      font-weight: 600;
-      transition: 0.3s ease;
-    }
-
-    .primary-btn {
-      background: #111;
-      color: white;
-    }
-
-    .primary-btn:hover {
-      background: #ff5a1f;
-      transform: translateY(-3px);
-    }
-
-    .secondary-btn {
-      border: 1px solid #ddd;
-      color: #111;
-      background: white;
-    }
-
-    .secondary-btn:hover {
-      border-color: #111;
-      transform: translateY(-3px);
-    }
-
-    .hero-image {
-      position: relative;
-      animation: float 5s ease-in-out infinite;
-    }
-
-    .hero-image img {
-      border-radius: 30px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-      height: 700px;
-      object-fit: cover;
-    }
-
-    /* FEATURES */
-
-    .features {
-      padding: 100px 8%;
-      background: white;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-
-    .section-title h2 {
-      font-size: 48px;
-      margin-bottom: 15px;
-    }
-
-    .section-title p {
-      color: #666;
-      max-width: 650px;
-      margin: auto;
-      line-height: 1.8;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-
-    .feature-card {
-      background: #fafafa;
-      border-radius: 24px;
-      padding: 35px;
-      transition: 0.4s ease;
-      border: 1px solid transparent;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(0,0,0,0.08);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-    }
-
-    .feature-card h3 {
-      margin: 20px 0 15px;
-      font-size: 24px;
-    }
-
-    .feature-card p {
-      color: #666;
-      line-height: 1.8;
-    }
-
-    .icon {
-      width: 70px;
-      height: 70px;
-      border-radius: 18px;
-      background: rgba(255, 90, 31, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 28px;
-    }
-
-    /* POPULAR MENU */
-
-    .popular {
-      padding: 100px 8%;
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-
-    .menu-card {
-      background: white;
-      border-radius: 24px;
-      overflow: hidden;
-      transition: 0.4s ease;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    }
-
-    .menu-card:hover {
-      transform: translateY(-8px);
-    }
-
-    .menu-card img {
-      height: 250px;
-      object-fit: cover;
-    }
-
-    .menu-content {
-      padding: 25px;
-    }
-
-    .menu-content h3 {
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-
-    .menu-content p {
-      color: #666;
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-
-    .menu-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .price {
-      font-size: 24px;
-      font-weight: 700;
-      color: #ff5a1f;
-    }
-
-    .order-btn {
-      padding: 12px 20px;
-      border-radius: 999px;
-      background: #111;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    .order-btn:hover {
-      background: #ff5a1f;
-    }
-
-    /* CTA */
-
-    .cta {
-      padding: 100px 8%;
-    }
-
-    .cta-box {
-      background: #111;
-      border-radius: 40px;
-      padding: 80px;
-      text-align: center;
-      color: white;
-    }
-
-    .cta-box h2 {
-      font-size: 56px;
-      margin-bottom: 20px;
-    }
-
-    .cta-box p {
-      color: rgba(255,255,255,0.7);
-      max-width: 700px;
-      margin: auto auto 35px;
-      line-height: 1.8;
-    }
-
-    .cta-box a {
-      display: inline-block;
-      padding: 16px 32px;
-      background: #ff5a1f;
-      color: white;
-      border-radius: 999px;
-      font-weight: 600;
-      transition: 0.3s ease;
-    }
-
-    .cta-box a:hover {
-      transform: translateY(-3px);
-    }
-
-    /* FOOTER */
-
-    footer {
-      padding: 35px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      background: white;
-      border-top: 1px solid rgba(0,0,0,0.05);
-    }
-
-    footer p {
-      color: #666;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 25px;
-    }
-
-    .footer-links a {
-      color: #444;
-    }
-
-    /* ANIMATION */
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-12px);
-      }
-
-      100% {
-        transform: translateY(0px);
-      }
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 1100px) {
-
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-text {
-        text-align: center;
-      }
-
-      .hero-text p {
-        margin-inline: auto;
-      }
-
-      .hero-buttons {
-        justify-content: center;
-      }
-
-      .hero-image img {
-        height: 500px;
-      }
-
-    }
-
-    /* AUTH MODAL */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.3s ease;
-    }
-
-    .modal.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-box {
-      width: 420px;
-      background: white;
-      padding: 40px;
-      border-radius: 30px;
-      position: relative;
-      animation: fadeUp 0.5s ease;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 22px;
-      cursor: pointer;
-      color: #666;
-    }
-
-    .modal-box h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .modal-box p {
-      color: #666;
-      margin-bottom: 30px;
-    }
-
-    .auth-form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .auth-form input {
-      width: 100%;
-      padding: 16px;
-      border-radius: 14px;
-      border: 1px solid #ddd;
-      font-size: 15px;
-      outline: none;
-      transition: 0.3s ease;
-    }
-
-    .auth-form input:focus {
-      border-color: #ff5a1f;
-    }
-
-    .auth-form button {
-      padding: 16px;
-      border: none;
-      border-radius: 999px;
-      background: #111;
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    .auth-form button:hover {
-      background: #ff5a1f;
-    }
-
-    .login-btn {
-      padding: 12px 24px;
-      border-radius: 999px;
-      border: 1px solid #ddd;
-      background: white;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s ease;
-    }
-
-    .login-btn:hover {
-      border-color: #111;
-      transform: translateY(-2px);
-    }
-
-    /* ================= STYLE TAMBAHAN: GOOGLE DUMMY LINK ================= */
-    .divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      margin: 20px 0;
-      color: #888;
-      font-size: 13px;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid #eee;
-    }
-
-    .divider:not(:empty)::before {
-      margin-right: .5em;
-    }
-
-    .divider:not(:empty)::after {
-      margin-left: .5em;
-    }
-
-    .google-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      width: 100%;
-      padding: 14px;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 999px;
-      color: #333;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s ease;
-      text-decoration: none;
-    }
-
-    .google-btn:hover {
-      background: #f9f9f9;
-      border-color: #bbb;
-      transform: translateY(-2px);
-    }
-
-    .google-btn svg {
-      width: 18px;
-      height: 18px;
-    }
-    /* ===================================================================== */
-
-    @media (max-width: 500px) {
-
-      .modal-box {
-        width: 90%;
-        padding: 30px;
-      }
-
-    }
-
-    @media (max-width: 768px) {
-
-      .navbar {
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .hero-text h1 {
-        font-size: 48px;
-      }
-
-      .section-title h2,
-      .cta-box h2 {
-        font-size: 36px;
-      }
-
-      .cta-box {
-        padding: 50px 30px;
-      }
-
-      footer {
-        flex-direction: column;
-        text-align: center;
-      }
-
-    }
-
-  </style>
+.nav{
+background:white;
+padding:20px;
+display:flex;
+justify-content:center;
+gap:15px;
+position:sticky;
+top:0;
+z-index: 100;
+}
+
+.nav button{
+border:none;
+background:#111;
+color:white;
+padding:12px 25px;
+border-radius:20px;
+cursor:pointer;
+}
+
+.nav button:hover{
+background:#ff5a1f;
+}
+
+.container{
+padding:30px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:25px;
+margin-bottom:25px;
+box-shadow:0 15px 35px #ddd;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+}
+
+.stat{
+background:#fafafa;
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.stat h1{
+color:#ff5a1f;
+}
+
+/* ================= STYLE GRAF OFFLINE CSS ================= */
+.chart-container {
+margin-top: 30px;
+background: #fafafa;
+padding: 20px;
+border-radius: 20px;
+}
+
+.chart-filters {
+display: flex;
+gap: 10px;
+margin-bottom: 20px;
+}
+
+.chart-filters button {
+background: #ddd;
+border: none;
+padding: 8px 15px;
+border-radius: 15px;
+cursor: pointer;
+font-weight: bold;
+color: #333;
+}
+
+.chart-filters button.active {
+background: #ff5a1f;
+color: white;
+}
+
+.chart-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+
+.chart-box {
+background: white;
+padding: 20px;
+border-radius: 15px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.chart-title {
+font-size: 16px;
+font-weight: bold;
+margin-bottom: 15px;
+color: #333;
+}
+
+.custom-chart {
+display: flex;
+justify-content: space-around;
+align-items: flex-end;
+height: 200px;
+border-bottom: 2px solid #ddd;
+padding-top: 20px;
+position: relative;
+}
+
+.bar-wrapper {
+display: flex;
+flex-direction: column;
+align-items: center;
+flex-grow: 1;
+height: 100%;
+justify-content: flex-end;
+}
+
+.bar {
+width: 60%;
+max-width: 40px;
+background: #111;
+border-radius: 5px 5px 0 0;
+transition: height 0.5s ease;
+position: relative;
+cursor: pointer;
+}
+
+.bar:hover {
+opacity: 0.8;
+}
+
+.bar-value {
+position: absolute;
+top: -22px;
+left: 50%;
+transform: translateX(-50%);
+font-size: 11px;
+font-weight: bold;
+color: #333;
+white-space: nowrap;
+}
+
+.bar-label {
+font-size: 12px;
+margin-top: 8px;
+color: #666;
+text-align: center;
+}
+
+.revenue-bar {
+background: #ff5a1f !important;
+}
+/* ========================================================== */
+
+.item{
+background:#fafafa;
+padding:15px;
+border-radius:15px;
+margin:10px 0;
+border-left:5px solid #ff5a1f;
+}
+
+/* Style tambahan untuk susunan butang aksi menu */
+.menu-actions {
+margin-top: 10px;
+display: flex;
+gap: 10px;
+}
+
+.menu-actions button {
+flex: 1;
+padding: 8px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-weight: bold;
+color: white;
+}
+
+.btn-edit { background: #007bff; }
+.btn-save { background: #28a745; }
+.btn-delete { background: #e53935; }
+
+/* Input kecil di dalam list semasa mengedit */
+.edit-input {
+width: auto;
+display: inline-block;
+padding: 5px;
+margin: 2px;
+border-radius: 5px;
+border: 1px solid #ccc;
+font-size: 14px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:8px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+button.action{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#111;
+color:white;
+cursor:pointer;
+}
+
+@media(max-width:900px){
+.stats{
+grid-template-columns:1fr;
+}
+.chart-grid {
+grid-template-columns: 1fr;
+}
+}
+</style>
 </head>
+
 <body>
 
-  <header class="navbar">
-    <div class="logo">
-  <img src="images/logoBumbubabah.jpeg" alt="Bumbu Babah Logo">
-  <span>Bumbu Babah</span>
+<header>
+Bumbu Babah Admin Dashboard
+</header>
+
+<div class="nav">
+<button onclick="go('statistics')">Statistics</button>
+<button onclick="go('menu')">Menu</button>
+<button onclick="go('review')">Reviews</button>
+<button onclick="logout()">Logout</button>
 </div>
 
-    <nav class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#features">Features</a>
-      <a href="#menu">Menu</a>
-      <a href="#contact">Contact</a>
+<div class="container">
 
-      <button class="login-btn" onclick="openLogin()">
-        Login
-      </button>
+<div class="card" id="statistics">
+<h2>Business Statistics 📊</h2>
 
-      <button class="nav-btn" onclick="openRegister()">
-        Register
-      </button>
-    </nav>
-  </header>
+<div class="stats">
+<div class="stat">
+<h1 id="menuTotal">0</h1>
+<p>Menu</p>
+</div>
+<div class="stat">
+<h1 id="orderTotal">0</h1>
+<p>Orders</p>
+</div>
+<div class="stat">
+<h1 id="revenue">RM0</h1>
+<p>Revenue</p>
+</div>
+<div class="stat">
+<h1 id="reviewTotal">0</h1>
+<p>Reviews</p>
+</div>
+</div>
 
-  <section class="hero" id="home">
+<br>
 
-    <div class="hero-text">
-      <span>🔥 Modern Restaurant Experience</span>
+<div class="stats">
+<div class="stat">
+<h1 id="todayOrder">0</h1>
+<p>Today Orders</p>
+</div>
+<div class="stat">
+<h1 id="totalItem">0</h1>
+<p>Total Items Sold</p>
+</div>
+<div class="stat">
+<h1 id="avgOrder">RM0</h1>
+<p>Average Order</p>
+</div>
+<div class="stat">
+<h1 id="bestMenu">-</h1>
+<p>Popular Menu</p>
+</div>
+</div>
 
-      <h1>
-        Delicious Food
-        Delivered To You
-      </h1>
-
-      <p>
-        Experience premium restaurant ordering with modern design,
-        smooth ordering flow, and fresh delicious meals prepared
-        with love every single day.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#menu" class="primary-btn">Browse Menu</a>
-        <a href="#features" class="secondary-btn">Learn More</a>
-      </div>
-    </div>
-
-    <div class="hero-image">
-      <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=1200" alt="Malay Food">
-    </div>
-
-  </section>
-
-  <section class="features" id="features">
-
-    <div class="section-title">
-      <h2>Why Choose Us</h2>
-
-      <p>
-        Designed with modern restaurant experiences in mind — fast,
-        smooth, clean, and premium.
-      </p>
-    </div>
-
-    <div class="feature-grid">
-
-      <div class="feature-card">
-        <div class="icon">🍔</div>
-        <h3>Fresh Ingredients</h3>
-        <p>
-          Every meal is prepared using fresh premium ingredients for the best quality and taste.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon">⚡</div>
-        <h3>Fast Delivery</h3>
-        <p>
-          Quick and reliable delivery system that keeps your food fresh and warm.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="icon">⭐</div>
-        <h3>Top Rated</h3>
-        <p>
-          Trusted by thousands of customers with excellent reviews and ratings.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
-
-  <section class="popular" id="menu">
-
-    <div class="section-title">
-      <h2>Popular Dishes</h2>
-
-      <p>
-        Discover our best-selling meals loved by customers every day.
-      </p>
-    </div>
-
-<div class="menu-grid">
-
-  <div class="menu-card">
-    <img src="https://images.unsplash.com/photo-1516684732162-798a0062be99?q=80&w=1200" alt="Nasi Putih">
-
-    <div class="menu-content">
-      <h3>Nasi Putih</h3>
-
-      <p>
-        Nasi putih panas dan lembut yang dimasak segar setiap hari.
-      </p>
-
-      <div class="menu-footer">
-        <span class="price">RM3.00</span>
-        <button class="order-btn" onclick="openLogin()">Order</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="menu-card">
-    <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?q=80&w=1200" alt="Ayam Bakar">
-
-    <div class="menu-content">
-      <h3>Ayam Bakar</h3>
-
-      <p>
-        Ayam bakar berempah dengan aroma asap yang menyelerakan.
-      </p>
-
-      <div class="menu-footer">
-        <span class="price">RM12.00</span>
-        <button class="order-btn" onclick="openLogin()">Order</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="menu-card">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Kampung_Paya_Jaras_Tengah%2C_Selangor_20250112_111351.jpg/1280px-Kampung_Paya_Jaras_Tengah%2C_Selangor_20250112_111351.jpg" alt="Cendol">
-
-    <div class="menu-content">
-      <h3>Cendol</h3>
-
-      <p>
-        Cendol tradisional dengan santan segar dan gula Melaka asli.
-      </p>
-
-      <div class="menu-footer">
-        <span class="price">RM6.00</span>
-        <button class="order-btn" onclick="openLogin()">Order</button>
-      </div>
-    </div>
-  </div>
+<div class="chart-container">
+<h3>Analytics Performance 📈</h3>
+<div class="chart-filters">
+<button id="btn-day" class="active" onclick="changeFilter('day')">Day</button>
+<button id="btn-week" onclick="changeFilter('week')">Week</button>
+<button id="btn-month" onclick="changeFilter('month')">Month</button>
+<button id="btn-year" onclick="changeFilter('year')">Year</button>
+</div>
+<div class="chart-grid">
+<div class="chart-box">
+<div class="chart-title">Revenue (RM)</div>
+<div class="custom-chart" id="revenueChartBox"></div>
+</div>
+<div class="chart-box">
+<div class="chart-title">Total Orders</div>
+<div class="custom-chart" id="ordersChartBox"></div>
+</div>
+</div>
+</div>
 
 </div>
 
-  </section>
+<div class="card" id="menu">
+<h2>Menu Management 🍛</h2>
+<input id="name" placeholder="Food name">
+<input id="price" placeholder="Price">
+<input id="category" placeholder="Category">
+<button class="action" onclick="addMenu()">Add Menu</button>
+<div id="menuList"></div>
+</div>
 
-  <section class="cta" id="contact">
-
-    <div class="cta-box">
-      <h2>Ready To Order?</h2>
-
-      <p>
-        Start your modern food ordering experience today with FoodieHub.
-      </p>
-
-      <a href="#" onclick="openLogin()">Get Started</a>
-    </div>
-
-  </section>
-
-  <footer>
-    <p>© 2026 Bumbu Babah Restaurant. All rights reserved.</p>
-
-    <div class="footer-links">
-
-  <a href="images.html">
-    Instagram
-  </a>
-
-  <a href="facebook.html">
-    Facebook
-  </a>
-
-  <a href="tiktok.html">
-    TikTok
-  </a>
+<div class="card" id="review">
+<h2>Customer Reviews ⭐</h2>
+<h3>Average: <span id="average">0</span></h3>
+<div id="reviewList"></div>
+</div>
 
 </div>
-  </footer>
 
-  <div class="modal" id="loginModal">
+<script>
+// SECURITY
+if(localStorage.getItem("userRole") !== "admin"){
+alert("Access denied!");
+location.href="index.html";
+}
 
-    <div class="modal-box">
+let menu = JSON.parse(localStorage.getItem("menuData"))||[];
+let currentActiveFilter = 'day';
 
-      <span class="close-btn" onclick="closeLogin()">
-        ✕
-      </span>
+function addMenu(){
+let n = document.getElementById("name").value;
+let p = document.getElementById("price").value;
+let c = document.getElementById("category").value;
 
-      <h2>Welcome Back</h2>
+if(!n||!p) return alert("Fill all");
 
-      <p>Login to continue your food ordering experience.</p>
+menu.push({ name:n, price:Number(p), category:c });
+localStorage.setItem("menuData", JSON.stringify(menu));
 
-      <form class="auth-form" id="loginForm">
+// Kosongkan semula ruangan input selepas berjaya tambah menu
+document.getElementById("name").value = "";
+document.getElementById("price").value = "";
+document.getElementById("category").value = "";
 
-        <input type="email" placeholder="Email Address" required>
+loadAll();
+}
 
-        <input type="password" placeholder="Password" required>
+function deleteMenu(i){
+if(confirm("Are you sure you want to delete this item?")) {
+menu.splice(i,1);
+localStorage.setItem("menuData", JSON.stringify(menu));
+loadAll();
+}
+}
 
-        <button type="submit">Login</button>
+/* ================= FUNGSI KEMAS KINI (UPDATE) MENU ================= */
 
-      </form>
+// Fungsi untuk menukar teks menu kepada bentuk input form
+function editMenuMode(i) {
+    let itemDiv = document.getElementById(`menu-item-${i}`);
+    let m = menu[i];
 
-      <div class="divider">or log in with</div>
+    itemDiv.innerHTML = `
+        <input type="text" class="edit-input" id="edit-name-${i}" value="${m.name}" style="width: 40%">
+        RM <input type="number" class="edit-input" id="edit-price-${i}" value="${m.price}" style="width: 20%">
+        (<input type="text" class="edit-input" id="edit-cat-${i}" value="${m.category}" style="width: 25%">)
+        <div class="menu-actions">
+            <button class="btn-save" onclick="saveMenuUpdate(${i})">Save</button>
+            <button style="background:#6c757d;" onclick="loadMenu()">Cancel</button>
+        </div>
+    `;
+}
 
-      <a href="#" class="google-btn" onclick="alert('Google Sign-In!.')">
-        <svg viewBox="0 0 24 24">
-          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-        </svg>
-        Continue with Google
-      </a>
+// Fungsi untuk menyimpan perubahan data ke dalam LocalStorage
+function saveMenuUpdate(i) {
+    let newName = document.getElementById(`edit-name-${i}`).value;
+    let newPrice = document.getElementById(`edit-price-${i}`).value;
+    let newCat = document.getElementById(`edit-cat-${i}`).value;
 
+    if(!newName || !newPrice) return alert("Name and price cannot be empty!");
+
+    // Kemaskini data array utama
+    menu[i].name = newName;
+    menu[i].price = Number(newPrice);
+    menu[i].category = newCat;
+
+    // Simpan ke LocalStorage
+    localStorage.setItem("menuData", JSON.stringify(menu));
+    
+    loadAll();
+}
+
+/* =================================================================== */
+
+function loadMenu(){
+let box = document.getElementById("menuList");
+box.innerHTML="";
+
+menu.forEach((m,i)=>{
+box.innerHTML+=`
+<div class="item" id="menu-item-${i}">
+    <b>${m.name}</b> - RM${m.price} (${m.category})
+    <div class="menu-actions">
+        <button class="btn-edit" onclick="editMenuMode(${i})">Edit</button>
+        <button class="btn-delete" onclick="deleteMenu(${i})">Delete</button>
     </div>
-
-  </div>
-
-  <div class="modal" id="registerModal">
-
-    <div class="modal-box">
-
-      <span class="close-btn" onclick="closeRegister()">
-        ✕
-      </span>
-
-      <h2>Create Account</h2>
-
-      <p>Join FoodieHub and start ordering delicious meals.</p>
-
-      <form class="auth-form" id="registerForm">
-
-        <input type="text" placeholder="Full Name">
-
-        <input type="email" placeholder="Email Address">
-
-        <input type="password" placeholder="Password">
-
-        <input type="password" placeholder="Confirm Password">
-
-        <button type="submit">
-          Register
-        </button>
-
-      </form>
-
-    </div>
-
-  </div>
-
-  <script>
-
-
-const loginModal = document.getElementById('loginModal');
-const registerModal = document.getElementById('registerModal');
-
-
-function openLogin(){
-    loginModal.classList.add('active');
-}
-
-
-function closeLogin(){
-    loginModal.classList.remove('active');
-}
-
-
-function openRegister(){
-    registerModal.classList.add('active');
-}
-
-
-function closeRegister(){
-    registerModal.classList.remove('active');
-}
-
-
-
-// LOGIN SYSTEM
-
-document
-.getElementById("loginForm")
-.addEventListener("submit", function(e){
-
-    e.preventDefault();
-
-
-    let email =
-    document.querySelector(
-    "#loginForm input[type='email']"
-    ).value;
-
-
-    let password =
-    document.querySelector(
-    "#loginForm input[type='password']"
-    ).value;
-
-
-
-    console.log(email,password);
-
-
-
-    // ADMIN
-
-    if(
-    email === "admin@mail.com" &&
-    password === "admin123"
-    ){
-
-        localStorage.removeItem("userRole");
-
-        localStorage.setItem(
-        "userRole",
-        "admin"
-        );
-
-
-        alert("Admin Login");
-
-
-        window.location.replace(
-        "admin.html"
-        );
-
-    }
-
-
-
-    // STAFF
-
-    if(
-
-    email === "staff@mail.com" &&
-    password === "staff123"
-
-    ){
-
-
-        localStorage.removeItem("userRole");
-
-        localStorage.setItem(
-        "userRole",
-        "staff"
-        );
-
-
-        alert("Staff Login");
-
-
-        window.location.replace(
-        "staff.html"
-        );
-
-
-    }
-
-
-
-    // CUSTOMER
-
-    if(
-    email !== "admin@mail.com" && email !== "staff@mail.com"
-    ){
-
-
-        localStorage.removeItem("userRole");
-
-        localStorage.setItem(
-        "userRole",
-        "customer"
-        );
-
-
-        alert("Customer Login");
-
-
-        window.location.replace(
-        "customer.html"
-        );
-
-
-    }
-
-
-
+</div>
+`;
 });
+}
+
+function loadReviews(){
+let r = JSON.parse(localStorage.getItem("reviews"))||[];
+let box = document.getElementById("reviewList");
+box.innerHTML="";
+let total=0;
+
+r.forEach(x=>{
+total+=x.rating;
+box.innerHTML+=`
+<div class="item">
+<b>${x.customer}</b><br>
+${"⭐".repeat(x.rating)}<br>
+${x.comment}
+</div>
+`;
+});
+
+document.getElementById("reviewTotal").innerHTML=r.length;
+document.getElementById("average").innerHTML= r.length ? (total/r.length).toFixed(1) : 0;
+}
+
+function statistics(){
+menu = JSON.parse(localStorage.getItem("menuData")) || [];
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+document.getElementById("menuTotal").innerHTML = menu.length;
+document.getElementById("orderTotal").innerHTML = orders.length;
+
+let money = 0;
+orders.forEach(o=>{ money += Number(o.total); });
+document.getElementById("revenue").innerHTML = "RM"+money;
+
+let totalItem = 0;
+let countMenu = {};
+
+orders.forEach(o=>{
+if(o.items){
+o.items.forEach(i=>{
+totalItem += Number(i.qty || 1);
+countMenu[i.name] = (countMenu[i.name]||0)+1;
+});
+}
+});
+
+document.getElementById("todayOrder").innerHTML = orders.length;
+document.getElementById("totalItem").innerHTML = totalItem;
+document.getElementById("avgOrder").innerHTML = orders.length ? "RM"+(money/orders.length).toFixed(2) : "RM0";
+
+let popular="-";
+let max=0;
+for(let x in countMenu){
+if(countMenu[x]>max){
+max=countMenu[x];
+popular=x;
+}
+}
+document.getElementById("bestMenu").innerHTML = popular;
+}
+
+// ================= LOGIK GRAF (MENGGUNAKAN DATA REAL DARI LOCALSTORAGE) =================
+
+function getRealChartData(filter) {
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    let labels = [];
+    let revenueData = [];
+    let ordersData = [];
+
+    if (filter === 'day') {
+        labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        revenueData = [0, 0, 0, 0, 0, 0, 0];
+        ordersData = [0, 0, 0, 0, 0, 0, 0];
+
+        orders.forEach(o => {
+            if (o.date) {
+                let d = new Date(o.date);
+                let dayIndex = d.getDay();
+                let adjustedIndex = dayIndex === 0 ? 6 : dayIndex - 1;
+                if(adjustedIndex >= 0 && adjustedIndex < 7) {
+                    revenueData[adjustedIndex] += Number(o.total || 0);
+                    ordersData[adjustedIndex] += 1;
+                }
+            }
+        });
+    } 
+    else if (filter === 'week') {
+        labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+        revenueData = [0, 0, 0, 0];
+        ordersData = [0, 0, 0, 0];
+
+        orders.forEach(o => {
+            if (o.date) {
+                let d = new Date(o.date);
+                let dateNum = d.getDate();
+                let weekIndex = Math.floor((dateNum - 1) / 7);
+                if(weekIndex > 3) weekIndex = 3;
+                revenueData[weekIndex] += Number(o.total || 0);
+                ordersData[weekIndex] += 1;
+            }
+        });
+    } 
+    else if (filter === 'month') {
+        labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        revenueData = Array(12).fill(0);
+        ordersData = Array(12).fill(0);
+
+        orders.forEach(o => {
+            if (o.date) {
+                let d = new Date(o.date);
+                let monthIndex = d.getMonth();
+                revenueData[monthIndex] += Number(o.total || 0);
+                ordersData[monthIndex] += 1;
+            }
+        });
+    } 
+    else if (filter === 'year') {
+        let currentYear = new Date().getFullYear();
+        labels = [(currentYear - 2).toString(), (currentYear - 1).toString(), currentYear.toString()];
+        revenueData = [0, 0, 0];
+        ordersData = [0, 0, 0];
+
+        orders.forEach(o => {
+            if (o.date) {
+                let d = new Date(o.date);
+                let y = d.getFullYear().toString();
+                let yearIndex = labels.indexOf(y);
+                if (yearIndex !== -1) {
+                    revenueData[yearIndex] += Number(o.total || 0);
+                    ordersData[yearIndex] += 1;
+                }
+            }
+        });
+    }
+
+    return { labels, revenue: revenueData, orders: ordersData };
+}
+
+function renderCustomCharts(filter) {
+    currentActiveFilter = filter;
+    const revBox = document.getElementById('revenueChartBox');
+    const ordBox = document.getElementById('ordersChartBox');
+
+    if (!revBox || !ordBox) return;
+
+    const liveData = getRealChartData(filter);
+    const maxRevenue = Math.max(...liveData.revenue);
+    const maxOrders = Math.max(...liveData.orders);
+
+    let revHTML = '';
+    liveData.labels.forEach((label, index) => {
+        const val = liveData.revenue[index];
+        const heightPercent = maxRevenue > 0 ? (val / maxRevenue) * 90 : 2; 
+        revHTML += `
+        <div class="bar-wrapper">
+            <div class="bar revenue-bar" style="height: ${heightPercent}%">
+                <span class="bar-value">RM${val.toFixed(0)}</span>
+            </div>
+            <div class="bar-label">${label}</div>
+        </div>
+        `;
+    });
+    revBox.innerHTML = revHTML;
+
+    let ordHTML = '';
+    liveData.labels.forEach((label, index) => {
+        const val = liveData.orders[index];
+        const heightPercent = maxOrders > 0 ? (val / maxOrders) * 90 : 2;
+        ordHTML += `
+        <div class="bar-wrapper">
+            <div class="bar" style="height: ${heightPercent}%">
+                <span class="bar-value">${val}</span>
+            </div>
+            <div class="bar-label">${label}</div>
+        </div>
+        `;
+    });
+    ordBox.innerHTML = ordHTML;
+}
+
+function changeFilter(filter) {
+    document.querySelectorAll('.chart-filters button').forEach(btn => btn.classList.remove('active'));
+    const targetBtn = document.getElementById(`btn-${filter}`);
+    if(targetBtn) targetBtn.classList.add('active');
+    renderCustomCharts(filter);
+}
+
+// =================================================================
+
+function loadAll(){
+    loadMenu();
+    loadReviews();
+    statistics();
+    renderCustomCharts(currentActiveFilter); 
+}
+
+function go(id){
+    document.getElementById(id).scrollIntoView({ behavior:"smooth" });
+}
+
+function logout(){
+    localStorage.removeItem("userRole");
+    location.href="index.html";
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    loadAll();
+});
+
+// Sela masa untuk penyegaran statistik am (Graf ditiadakan dari fungsi auto-refresh auto-draw bagi mengelakkan gangguan ketika menaip edit)
+setInterval(()=>{
+    loadReviews();
+    statistics();
+},5000);
 
 </script>
 
