@@ -12,12 +12,11 @@
 ========================= */
 
 @media screen and (max-width: 768px) {
-
   body {
     padding: 15px;
   }
 
-  .invoice {
+  .invoice, .payment-selection-container {
     padding: 20px;
     border-radius: 12px;
   }
@@ -52,20 +51,20 @@
     font-size: 14px;
   }
 
-  .buttons {
+  .buttons, .method-grid {
     flex-direction: column;
   }
   
   .back-btn{
-  background: #ddd;
-}
+    background: #ddd;
+  }
 
-	.next-btn{
-  background: #3498db;
-  color: white;
-}
+  .next-btn{
+    background: #3498db;
+    color: white;
+  }
 
-  button {
+  button, .method-card {
     width: 100%;
     font-size: 14px;
     padding: 12px;
@@ -78,13 +77,15 @@
       padding: 40px;
     }
 
-    .invoice{
+    /* PENGURUSAN PAPARAN SKRIN */
+    .invoice {
       max-width: 700px;
       margin: auto;
       background: white;
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: none; 
     }
 
     .top{
@@ -163,6 +164,7 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
+      transition: 0.2s ease;
     }
 
     .print-btn{
@@ -174,23 +176,138 @@
       background: #ddd;
     }
 
-    @media print {
+    /* ===================================================
+       STYLE UNTUK PILIHAN KAEDAH PEMBAYARAN
+    =================================================== */
+    .payment-selection-container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      text-align: center;
+    }
 
+    .payment-selection-container h2 {
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    .payment-selection-container p {
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .method-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .method-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 16px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+
+    .method-card:hover {
+      border-color: #ff5a1f;
+      background: #fffaf8;
+    }
+
+    .method-card.selected {
+      border-color: #ff5a1f;
+      background: #ff5a1f;
+      color: white;
+    }
+
+    .method-icon {
+      font-size: 24px;
+    }
+
+    .proceed-btn {
+      width: 100%;
+      background: #111;
+      color: white;
+      padding: 16px;
+    }
+
+    .proceed-btn:hover {
+      background: #ff5a1f;
+    }
+
+    /* ===================================================
+       STYLE UNTUK DUMMY PROCESSING SYSTEM (LOADING OVERLAY)
+    =================================================== */
+    .processing-container {
+      max-width: 500px;
+      margin: 80px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      text-align: center;
+      display: none; /* Disembunyikan pada permulaan */
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #ff5a1f;
+      border-radius: 50%;
+      margin: 0 auto 25px;
+      animation: spin 1s linear infinite;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      background-color: #eee;
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 10px;
+      background-color: #2ecc71;
+      transition: width 0.4s ease;
+    }
+
+    .status-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media print {
       body{
         background: white;
         padding: 0;
       }
-
-      .buttons,
-      .customer{
-        display: none;
+      .buttons, .customer, .processing-container, .payment-selection-container {
+        display: none !important;
       }
-
       .invoice{
+        display: block !important;
         box-shadow: none;
         border-radius: 0;
       }
-
     }
 
   </style>
@@ -198,23 +315,49 @@
 
 <body>
 
-  <div class="invoice">
+  <div class="payment-selection-container" id="paymentSelection">
+    <h2>Select Payment Method</h2>
+    <p>Choose how you would like to pay for your meal.</p>
+    
+    <div class="method-grid">
+      <div class="method-card selected" onclick="selectMethod(this, 'Card')">
+        <span class="method-icon">💳</span>
+        <span>Credit / Debit Card</span>
+      </div>
+      <div class="method-card" onclick="selectMethod(this, 'Cash')">
+        <span class="method-icon">💵</span>
+        <span>Cash (Exact Amount)</span>
+      </div>
+      <div class="method-card" onclick="selectMethod(this, 'Counter')">
+        <span class="method-icon">🏪</span>
+        <span>Pay At Counter</span>
+      </div>
+    </div>
+
+    <button class="proceed-btn" onclick="startPaymentProcessing()">Proceed to Payment</button>
+  </div>
+
+  <div class="processing-container" id="processingSystem">
+    <div class="spinner" id="processIcon"></div>
+    <div class="status-text" id="statusMessage">Initializing transaction...</div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p style="color: #777; font-size: 14px;">Please do not close or refresh this page.</p>
+  </div>
+
+  <div class="invoice" id="invoiceSheet">
 
     <div class="top">
-
-      <div class="logo">
-        Bumbu Babah
-      </div>
-
+      <div class="logo">Bumbu Babah</div>
       <div class="invoice-title">
         <h1>INVOICE</h1>
         <p id="date"></p>
+        <p style="margin-top: 5px; font-weight: bold; color: #ff5a1f;">Payment: <span id="paymentLabel">Card</span></p>
       </div>
-
     </div>
 
     <table>
-
       <thead>
         <tr>
           <th>Item</th>
@@ -223,11 +366,7 @@
           <th>Total</th>
         </tr>
       </thead>
-
-      <tbody id="invoiceItems">
-
-      </tbody>
-
+      <tbody id="invoiceItems"></tbody>
     </table>
 
     <div class="total-box">
@@ -236,128 +375,144 @@
 
     <div class="customer">
       <h3>Customer Name</h3>
-
       <input type="text" placeholder="Enter customer name">
     </div>
 
-<div class="buttons">
-
-  <button class="back-btn" onclick="goBack()">
-    Back
-  </button>
-
-  <button class="next-btn" onclick="goReview()">
-    Next
-  </button>
-
-  <button class="print-btn" onclick="finishOrder()">
-    Print Invoice
-  </button>
-
-</div>
+    <div class="buttons">
+      <button class="back-btn" onclick="goBack()">Back</button>
+      <button class="next-btn" onclick="goReview()">Next</button>
+      <button class="print-btn" onclick="finishOrder()">Print Invoice</button>
+    </div>
 
   </div>
 
 <script>
-
-	function finishOrder(){
-
-  // print dulu
-  window.print();
-
-  // lepas print baru clear cart
-  setTimeout(() => {
-    localStorage.removeItem("cart");
-  }, 500);
-
-}
-
   let order = JSON.parse(localStorage.getItem("lastOrder")) || null;
+  let selectedPaymentMethod = "Card"; // Tetapan asal (Default)
 
-if(!order){
-  document.body.innerHTML = "<h2>No order found</h2>";
-}
+  if(!order){
+    document.body.innerHTML = "<h2>No order found</h2>";
+  }
 
+  // Fungsi menukar pilihan kaedah pembayaran secara visual
+  function selectMethod(element, method) {
+    document.querySelectorAll('.method-card').forEach(card => card.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedPaymentMethod = method;
+  }
+
+  // Fungsi memulakan dummy loading berdasarkan kaedah pilihan
+  function startPaymentProcessing() {
+    // Sembunyikan skrin pemilihan kaedah, paparkan skrin pemprosesan
+    document.getElementById("paymentSelection").style.display = "none";
+    document.getElementById("processingSystem").style.display = "block";
+
+    // Kemaskini label kaedah bayaran di helaian resit invois nanti
+    document.getElementById("paymentLabel").innerText = selectedPaymentMethod;
+
+    // Tetapan skrip langkah mesej status mengikut kesesuaian kaedah bayaran
+    let steps = [];
+    if (selectedPaymentMethod === 'Card') {
+      steps = [
+        { text: "Connecting to bank gateway...", progress: 25 },
+        { text: "Verifying card details & PIN...", progress: 55 },
+        { text: "Securing transaction authorization...", progress: 85 },
+        { text: "Payment Approved! Generating receipt...", progress: 100 }
+      ];
+    } else if (selectedPaymentMethod === 'Cash') {
+      steps = [
+        { text: "Calculating exact change required...", progress: 30 },
+        { text: "Logging cash transaction details...", progress: 65 },
+        { text: "Order recorded successfully! Generating receipt...", progress: 100 }
+      ];
+    } else { // Pay At Counter
+      steps = [
+        { text: "Generating digital booking reference...", progress: 30 },
+        { text: "Sending order queue details to the counter...", progress: 70 },
+        { text: "Saved! Please pay at the counter later...", progress: 100 }
+      ];
+    }
+
+    let currentStep = 0;
+    const bar = document.getElementById("progressBar");
+    const statusTxt = document.getElementById("statusMessage");
+
+    const interval = setInterval(() => {
+      if (currentStep < steps.length) {
+        statusTxt.innerText = steps[currentStep].text;
+        bar.style.width = steps[currentStep].progress + "%";
+        
+        if (steps[currentStep].progress === 100) {
+          document.getElementById("processIcon").style.borderTopColor = "#2ecc71";
+        }
+        currentStep++;
+      } else {
+        clearInterval(interval);
+        // Tutup skrin loading, tunjuk invois penuh
+        document.getElementById("processingSystem").style.display = "none";
+        document.getElementById("invoiceSheet").style.display = "block";
+      }
+    }, 1000); 
+  }
+
+  // ================= JANAAN ITEM DALAM JADUAL INVOIS =================
   let invoiceItems = document.getElementById("invoiceItems");
-  
+    
   order.items.forEach(item=>{
+    invoiceItems.innerHTML +=`
+      <tr>
+        <td>${item.name}</td>
+        <td>${item.qty}</td>
+        <td>RM${item.price}</td>
+        <td>RM${item.price*item.qty}</td>
+      </tr>
+    `;
+  });
 
-invoiceItems.innerHTML +=`
+  let subtotal = 0;
+  order.items.forEach(item => {
+    subtotal += item.price * item.qty;
+  });
 
-<tr>
+  let sst = subtotal * 0.06;
+  let grandTotal = subtotal + sst;
 
-<td>${item.name}</td>
+  document.querySelector("input").value = order.name;
+  document.querySelector("input").disabled = true;
 
-<td>${item.qty}</td>
-
-<td>RM${item.price}</td>
-
-<td>
-RM${item.price*item.qty}
-</td>
-
-</tr>
-
-`;
-
-});
-
-let subtotal = 0;
-
-order.items.forEach(item => {
-  subtotal += item.price * item.qty;
-});
-
-let sst = subtotal * 0.06;
-let grandTotal = subtotal + sst;
-
-document.querySelector("input").value = order.name;
-document.querySelector("input").disabled = true;
-
-  // Add summary rows
   invoiceItems.innerHTML += `
     <tr>
       <td colspan="3" style="text-align:right;"><b>Subtotal</b></td>
       <td><b>RM${subtotal.toFixed(2)}</b></td>
     </tr>
-
     <tr>
-      <td colspan="3" style="text-align:right;">
-        <b>SST (6%)</b>
-      </td>
+      <td colspan="3" style="text-align:right;"><b>SST (6%)</b></td>
       <td><b>RM${sst.toFixed(2)}</b></td>
     </tr>
-
     <tr>
-      <td colspan="3" style="text-align:right; font-size:20px;">
-        <b>Grand Total</b>
-      </td>
-      <td style="font-size:20px; color:green;">
-        <b>RM${grandTotal.toFixed(2)}</b>
-      </td>
+      <td colspan="3" style="text-align:right; font-size:20px;"><b>Grand Total</b></td>
+      <td style="font-size:20px; color:green;"><b>RM${grandTotal.toFixed(2)}</b></td>
     </tr>
   `;
 
-  document.getElementById("grandTotal").innerText =
-    "TOTAL: RM " + grandTotal.toFixed(2);
-	
-	/* CLEAR CART AUTO */
+  document.getElementById("grandTotal").innerText = "TOTAL: RM " + grandTotal.toFixed(2);
+  document.getElementById("date").innerText = new Date().toLocaleString();
 
-
-  document.getElementById("date").innerText =
-    new Date().toLocaleString();
+  function finishOrder(){
+    window.print();
+    setTimeout(() => {
+      localStorage.removeItem("cart");
+    }, 500);
+  }
 
   function goBack(){
     window.location.href = "customer.html";
   }
-  
+    
   function goReview(){
-
-  localStorage.removeItem("cart");
-
-  window.location.href = "review.html";
-}
-
+    localStorage.removeItem("cart");
+    window.location.href = "review.html";
+  }
 </script>
 
 </body>
